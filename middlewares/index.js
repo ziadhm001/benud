@@ -16,7 +16,10 @@ const returnInvalid = (req, res) => {
 }
 
 const errorHandler = (error, req, res, next) => {
-    res.status(500).json({error:error.message});
+    if(error.message === "البريد الالكتروني أو كلمة المرور خاطئة")
+        res.status(204).json({error: error.message})
+    else
+        res.status(500).json({error:error.message});
 }
 
 export {validateDbId, returnNotFound, returnInvalid, errorHandler};

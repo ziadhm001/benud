@@ -32,5 +32,5 @@ app.get("/api/policy", async (req, res) => {
 
 app.use(errorHandler);
 connectDB()
-  .then(() => app.listen(PORT, () => console.log(`Server started at ${PORT}`)))
+  .then(() => app.listen(PORT, '192.168.1.12', () => console.log(`Server started at ${PORT}`)))
   .catch((err) => console.log(err));

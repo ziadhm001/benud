@@ -45,6 +45,7 @@ const changePW = async (req, res, next) => {
 
 const validateUser = async (req, res, next) => {
   const { username, password } = req.body;
+  console.log('hi')
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);

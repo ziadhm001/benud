@@ -1,11 +1,27 @@
+import mongoose from "mongoose";
 import Client from "../models/client.js";
 
-const createClient = async (req, res, next) => {
-  const { _id, } = req.user;
-  const { name, phoneNumber } = req.body;
+const updateClient = async (req, res, next) => {
+  const  userId  = req.user._id;
+  const { name, phoneNumber, _id } = req.body;
   try {
-    const client = await Client.add(name, phoneNumber, _id)
-    res.status(201).json({ msg: "Created Successfully" });
+    let client
+    if(name)
+      client = await Client.updateOne({_id, userId},{name})
+    if(phoneNumber)
+      client = await Client.updateOne({_id, userId},{phoneNumber})
+    res.status(201).json({ client });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const createClient = async (req, res, next) => {
+  const { _id } = req.user;
+  try {
+    console.log(_id)
+    const client = await Client.create({name: ' ', phoneNumber: ' ', userId: _id})
+    res.status(201).json({ client });
   } catch (err) {
     next(err);
   }
@@ -47,5 +63,6 @@ export {
   createClient,
   getClients,
   getClientData,
-  addClientData
+  addClientData,
+  updateClient
 };

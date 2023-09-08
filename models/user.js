@@ -101,12 +101,12 @@ userSchema.statics.login = async function (email, password) {
     
     const user = await this.findOne({ email: email.toLowerCase() })
     if (!user) {
-        throw Error("البريد الالكتروني خاطيء")
+        throw Error("البريد الالكتروني أو كلمة المرور خاطئة")
     }
 
     const match = await bcrypt.compare(password, user.password)
     if (!match) {
-        throw Error("كلمة المرور خاطئة    ")
+        throw Error("البريد الالكتروني أو كلمة المرور خاطئة")
     }
 
     return user
