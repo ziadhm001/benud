@@ -276,7 +276,7 @@ const addClientData = async (req, res, next) => {
   const getAccount = async (req, res, next) => {
     try {
       const client = await Client.findOne({_id: req.params.id});
-      const exists = await User.exists(client.phoneNumber);
+      const exists = await User.findOne({phoneNumber: client.phoneNumber});
       if(exists)
         res.status(200).json({username: client.phoneNumber})
       const password = randomString(8)
