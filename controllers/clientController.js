@@ -284,6 +284,7 @@ const addClientData = async (req, res, next) => {
         phoneNumber: client.phoneNumber,
         email: client.phoneNumber,
         password,
+        birthDate: "1/1/2001",
         role: "Client",
         engineer: req.user._id,
         name: client.name,
