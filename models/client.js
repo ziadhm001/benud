@@ -59,10 +59,19 @@ clientSchema.statics.getData = async function (userId, _id){
     return null
 }
 
-clientSchema.statics.addData = async function (userId, _id, projectName, projectLocation){
-    const client = await this.findOneAndUpdate({userId, _id}, { $push: { clientData: {_id: new mongoose.Types.ObjectId, projectName, projectLocation} } })
-    if(client)
-        return client
-    return null
-}
+clientSchema.statics.addData = async function (userId, _id, projectName, projectLocation, projectReceieved) {
+    const updatedClient = await this.findOneAndUpdate(
+      { userId, _id },
+      { $push: { clientData: { _id: new mongoose.Types.ObjectId(), projectName, projectLocation, projectReceieved} } },
+      { new: true } // Add this option to return the updated document
+    );
+  
+    if (updatedClient) {
+      const newElements = updatedClient.clientData.slice(-1); // Get the last element in the clientData array
+  
+      return newElements;
+    }
+  
+    return null;
+  };
 export default mongoose.model("Client", clientSchema)

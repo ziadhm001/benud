@@ -11,6 +11,7 @@ const createToken = (_id) => {
 const userCrud = generateCrudMethods(User);
 const createUser = async (req, res, next) => {
   const { email, password, name, phoneNumber, birthDate } = req.body;
+  console.log(email,password,name,phoneNumber,birthDate)
   try {
     const user = await User.signup(
       email,
