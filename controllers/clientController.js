@@ -80,6 +80,22 @@ const getReceived = async (req, res, next) => {
   }
 };
 
+const endProject = async (req, res, next) => {
+  const { _id } = req.params;
+  const userId = req.user._id;
+  try {
+    const project = await Client.findOneAndUpdate(
+      { userId },
+      { $pull: { clientData: { _id: mongoose.Types.ObjectId.createFromHexString(_id) } } },
+      { new: true } // To return the updated document after the update
+    );
+    console.log(project);
+    res.status(201).json({ project });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const updateClientData = async (req, res, next) => {
   const  userId  = req.user._id;
   const { projectLocation, projectName, _id } = req.body;
@@ -293,5 +309,6 @@ export {
   updateBand,
   addHesab,
   updateReceieved,
-  getReceived
+  getReceived,
+  endProject
 };

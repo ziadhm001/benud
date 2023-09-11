@@ -15,7 +15,8 @@ import {
     getHesabat,
     updateHesab,
     updateReceieved,
-    getReceived
+    getReceived,
+    endProject
 } from "../controllers/clientController.js"
 
 import { requireAuth } from "../middlewares/requireAuth.js"
@@ -37,6 +38,7 @@ router.get("/benod/:projectId", getBenod)
 router.post("/hesabat/addHesab", addHesab)
 router.get("/hesabat/:bandId/:classType", getHesabat)
 router.get("/project/:_id", getReceived)
+router.delete("/project/delete", endProject)
 router.put("/hesabat/update", updateHesab)
 
 
