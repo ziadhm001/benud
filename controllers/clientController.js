@@ -81,7 +81,7 @@ const getReceived = async (req, res, next) => {
 };
 
 const endProject = async (req, res, next) => {
-  const { _id } = req.params;
+  const { _id } = req.body;
   const userId = req.user._id;
   try {
     const project = await Client.findOneAndUpdate(
