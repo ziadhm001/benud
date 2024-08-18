@@ -167,6 +167,20 @@ const addBand = async (req, res, next) => {
   }
 };
 
+const deleteHesab = async (req, res, next) => {
+  const { _id } = req.body;
+  try {
+    const band = await Benod.updateOne(
+      { "bandHesabat._id": mongoose.Types.ObjectId.createFromHexString(_id) },
+      { $pull: { bandHesabat: { _id: mongoose.Types.ObjectId.createFromHexString(_id) } } }
+    )
+    console.log(band)
+    res.status(201).json({ band });
+  } catch (err) {
+    next(err);
+  }
+}
+
 const updateHesab = async (req, res, next) => {
   const { notes, type, paid, date, _id } = req.body;
   try {
@@ -311,5 +325,6 @@ export {
   addHesab,
   updateReceieved,
   getReceived,
-  endProject
+  endProject,
+  deleteHesab
 };

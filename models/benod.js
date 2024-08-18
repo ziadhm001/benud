@@ -17,6 +17,14 @@ benodSchema.statics.addHesab = async function (_id, classType) {
     );
     return id;
   };
+
+benodSchema.statics.deleteHesab = async function (_id, classType) {
+    const band = await this.findOneAndUpdate(
+      { _id },
+      { $pull: { bandHesabat: { classType } } }
+    );
+    return band;
+}
 benodSchema.statics.getHesabat = async function (_id, classType){
     const band = await this.findOne({_id}).select('bandHesabat')
     console.log(_id, classType)
