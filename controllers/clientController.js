@@ -81,20 +81,27 @@ const getReceived = async (req, res, next) => {
 };
 
 const endProject = async (req, res, next) => {
-  const { _id } = req.body;
-  const userId = req.user._id;
+  const { _id } = req.body;  // Project ID to be removed
+  const userId = req.user._id;  // User ID of the authenticated user
+
   try {
     const project = await Client.findOneAndUpdate(
       { userId },
-      { $pull: { clientData: { _id: mongoose.Types.ObjectId.createFromHexString(_id) } } },
-      { new: true } // To return the updated document after the update
+      { $pull: { clientData: { _id: new mongoose.Types.ObjectId(_id) } } },  // Correct instantiation of ObjectId
+      { new: true }  // To return the updated document after the update
     );
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
     console.log(project);
-    res.status(201).json({ project });
+    res.status(200).json({ project });
   } catch (err) {
     next(err);
   }
 };
+
 
 const updateClientData = async (req, res, next) => {
   const  userId  = req.user._id;
